@@ -33,3 +33,25 @@ ADD species_id INT REFERENCES species(id);
 
 ALTER TABLE animals
 ADD owner_id INT REFERENCES owners(id);
+
+CREATE TABLE vets(
+    id INT GENERATED ALWAYS AS IDENTITY,
+    name VARCHAR(100),
+    age INT,
+    date_of_graduation DATE,
+    PRIMARY KEY(id)
+);
+
+CREATE TABLE specializations(
+    vets_id INT REFERENCES vets(id),
+    species_id INT REFERENCES species(id),
+    PRIMARY KEY(vets_id, species_id )
+);
+
+CREATE TABLE visits(
+    id INT GENERATED ALWAYS AS IDENTITY,
+    vets_id INT REFERENCES vets(id),
+    animals_id INT REFERENCES animals(id),
+    visit_date DATE,
+    PRIMARY KEY(id, vets_id, animals_id)
+);
